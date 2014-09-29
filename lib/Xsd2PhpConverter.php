@@ -268,7 +268,7 @@ class Xsd2PhpConverter extends AbstractXsd2Converter
             }
             foreach ($restriction->getChecksByType('enumeration') as $check) {
                 $const = new PHPConstant();
-                $const->setName(strtoupper(Inflector::tableize($check["value"])));
+                $const->setName(strtoupper(str_replace('-', '_',$check["value"])));
                 $const->setValue($check["value"]);
                 if (isset($check["doc"])) {
                     $const->setDoc($check["doc"]);
