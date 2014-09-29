@@ -5,9 +5,6 @@ use Goetas\XML\XSDReader\Schema\Type\Type;
 use Goetas\XML\XSDReader\Schema\Type\ComplexType;
 use Goetas\XML\XSDReader\Schema\Element\ElementReal;
 use Goetas\XML\XSDReader\Schema\Schema;
-use Goetas\XML\XSDReader\Schema\Element\ElementNode;
-use Goetas\XML\XSDReader\Schema\Element\ElementRef;
-use Goetas\XML\XSDReader\Schema\Element\ElementItem;
 
 abstract class AbstractXsd2Converter
 {
@@ -185,7 +182,7 @@ abstract class AbstractXsd2Converter
                 $elements = $type->getElements();
                 $element = reset($elements);
 
-                if ($element instanceof ElementItem && ($element->getMax() > 1 || $element->getMax() === - 1)) {
+                if ($element instanceof ElementReal && ($element->getMax() > 1 || $element->getMax() === - 1)) {
                     return $element;
                 }
             }

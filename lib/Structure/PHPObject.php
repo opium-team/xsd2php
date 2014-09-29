@@ -6,36 +6,22 @@ trait PHPObject
 
     protected $checks = array();
 
-    /**
-     * @var PHPConstant[]
-     */
     protected $constants = array();
 
-    /**
-     * @var PHPProperty[]
-     */
     protected $properties = array();
 
-    /**
-     * @var PHPTrait[]
-     */
     protected $traits = array();
 
-    /**
-     * @param $property
-     * @return array
-     */
+    public function getProperties()
+    {
+        return $this->properties;
+    }
+
     public function getChecks($property)
     {
         return isset($this->checks[$property]) ? $this->checks[$property] : array();
     }
 
-    /**
-     * @param $property
-     * @param $check
-     * @param $value
-     * @return $this
-     */
     public function addCheck($property, $check, $value)
     {
         $this->checks[$property][$check][] = $value;
@@ -43,14 +29,7 @@ trait PHPObject
     }
 
     /**
-     * @return PHPProperty[]
-     */
-    public function getProperties()
-    {
-        return $this->properties;
-    }
-
-    /**
+     *
      * @param string $name
      * @return boolean
      */
@@ -60,8 +39,9 @@ trait PHPObject
     }
 
     /**
+     *
      * @param string $name
-     * @return bool
+     * @return boolean
      */
     public function hasPropertyInHierarchy($name)
     {
@@ -80,6 +60,7 @@ trait PHPObject
     }
 
     /**
+     *
      * @param string $name
      * @return PHPProperty
      */
@@ -100,6 +81,7 @@ trait PHPObject
     }
 
     /**
+     *
      * @param string $name
      * @return PHPProperty
      */
@@ -108,55 +90,56 @@ trait PHPObject
         return $this->properties[$name];
     }
 
-    /**
-     * @param PHPProperty $property
-     * @return $this
-     */
     public function addProperty(PHPProperty $property)
     {
         $this->properties[$property->getName()] = $property;
         return $this;
     }
 
-    /**
-     * @param PHPConstant $const
-     * @return $this
-     */
     public function addConstants(PHPConstant $const)
     {
         $this->constants[] = $const;
         return $this;
     }
 
-    /**
-     * @return PHPConstant[]
-     */
     public function getConstants()
     {
         return $this->constants;
     }
 
-    /**
-     * @return PHPTrait[]
-     */
+    public function getExtends()
+    {
+        return $this->extends;
+    }
+
+    public function setExtends(PHPClass $extends)
+    {
+        $this->extends = $extends;
+        return $this;
+    }
+
     public function getTraits()
     {
         return $this->traits;
     }
 
-    /**
-     * @param PHPTrait $trait
-     * @return $this
-     */
     public function addTrait(PHPTrait $trait)
     {
         $this->traits[] = $trait;
         return $this;
     }
 
-    /**
-     * @return string
-     */
+    public function getInterfaces()
+    {
+        return $this->interfaces;
+    }
+
+    public function setInterfaces($interfaces)
+    {
+        $this->interfaces = $interfaces;
+        return $this;
+    }
+
     public function __toString()
     {
         return "class " . $this->getFullName();
