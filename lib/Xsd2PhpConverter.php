@@ -292,11 +292,6 @@ class Xsd2PhpConverter extends AbstractXsd2Converter
                     $types[$name] = $unon->getRestriction()->getBase();
                 }
             }
-            $val = new PHPProperty('__value');
-            if (count($types) == 1 && ($candidato = reset($types))) {
-                $val->setType($this->visitType($candidato));
-            }
-            $class->addProperty($val);
         }
     }
 
@@ -307,9 +302,6 @@ class Xsd2PhpConverter extends AbstractXsd2Converter
             $class->setExtends($extension);
         } else {
             $extension = $this->visitType($type);
-            $val = new PHPProperty('__value');
-            $val->setType($extension);
-            $class->addProperty($val);
         }
     }
 
