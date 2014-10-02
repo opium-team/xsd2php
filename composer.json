@@ -19,7 +19,7 @@
         "repositories": [
         {
             "type": "vcs",
-            "url": "https://github.com/opium-team/xsd-reader.git"
+            "url": "https://github.com/opium-team/xsd2php"
         }
     ],
     "require": {
