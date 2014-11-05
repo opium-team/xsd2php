@@ -1,5 +1,5 @@
 {
-    "name": "goetas/xsd2php",
+    "name": "opium-team/xsd2php",
     "description": "Convert XSD  (XML Schema) definitions into PHP classes",
     "type": "library",
     "authors": [
