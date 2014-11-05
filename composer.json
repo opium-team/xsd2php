@@ -16,12 +16,13 @@
         "serializer"
     ],
     "license": "LGPL",
-        "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/opium-team/xsd2php"
-        }
-    ],
+    "repositories":
+        [
+            {
+                "type": "vcs",
+                "url": "https://github.com/opium-team/xsd-reader"
+            }
+        ],
     "require": {
         "php": ">= 5.3.3",
         "symfony/console": "~2.1",
