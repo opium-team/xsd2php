@@ -87,9 +87,6 @@ class ClassGenerator
             foreach ($type->getProperties() as $prop) {
                 $str .= $this->handleProperty($prop) . PHP_EOL . PHP_EOL;
             }
-            foreach ($type->getConstants() as $const) {
-                $str .= $this->handleConstantMethods($type, $const) . PHP_EOL . PHP_EOL;
-            }
 
             $str .= $this->handleChecks($type);
 
