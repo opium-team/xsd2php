@@ -479,7 +479,7 @@ class ClassGenerator
     {
         $str = '<?php' . PHP_EOL;
 
-        $str .= "namespace " . $type->getNamespace() . ";" . PHP_EOL;
+        $str .= "\nnamespace " . $type->getNamespace() . ";" . PHP_EOL;
 
         $base = null;
         if ($type instanceof PHPClass) {
