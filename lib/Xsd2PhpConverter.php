@@ -360,7 +360,11 @@ class Xsd2PhpConverter extends AbstractXsd2Converter
                 $arg->setName($element->getName());
                 $property->setType(new PHPClassOf($arg));
             } else {
-                $property->setType($this->findPHPType($class, $schema, $element));
+                $type = $this->findPHPType($class, $schema, $element);
+                $enums = $type->getConstants();
+                if (empty($enums)) {
+                    $property->setType($this->findPHPType($class, $schema, $element));
+                }
             }
             $property->setDoc($element->getDoc());
         }
@@ -370,7 +374,6 @@ class Xsd2PhpConverter extends AbstractXsd2Converter
 
     protected function findPHPType(PHPType $class, Schema $schema, TypeNodeChild $node)
     {
-
         if ($node->isAnonymousType()) {
             return $this->visitAnonymousType($schema, $node->getType(), $node->getName(), $class);
         } else {
