@@ -218,8 +218,6 @@ class ClassGenerator
         return $str;
     }
 
-
-
     protected function handleSetter(PHPProperty $prop, PHPType $class)
     {
         $type = $prop->getType();
@@ -231,11 +229,19 @@ class ClassGenerator
             $doc .= $c . PHP_EOL . PHP_EOL;
         }
         if ($type && $type instanceof PHPClassOf) {
-            $doc .= "@param $" . $prop->getName() . " " . $this->getPhpType($type->getArg()->getType()) . "[]";
+            $doc .= "@param $" . $prop->getName() . " " . $this->getPhpType($type->getArg()->getType()) . "[]". PHP_EOL;
         } elseif ($type) {
-            $doc .= "@param $" . $prop->getName() . " " . $this->getPhpType($prop->getType());
+            $doc .= "@param $" . $prop->getName() . " " . $this->getPhpType($prop->getType()). PHP_EOL;
         } else {
-            $doc .= "@param $" . $prop->getName() . " mixed";
+            $doc .= "@param $" . $prop->getName() . " mixed". PHP_EOL;
+        }
+
+        if ($type && $type instanceof PHPClassOf) {
+            $doc .= "@return " . $this->getPhpType($type->getArg()->getType()) . "[]";
+        } elseif ($type) {
+            $doc .= "@return " . $this->getPhpType($type);
+        } else {
+            $doc .= "@return mixed";
         }
 
         $str .= $this->writeDocBlock($doc);
@@ -244,6 +250,7 @@ class ClassGenerator
         if ($type && $this->hasTypeHint($type)) {
             $typedeclaration = $this->getPhpType($type) . " ";
         }
+
         $str .= "public function set" . Inflector::classify($prop->getName()) . "($typedeclaration\$" . $prop->getName() . ")" . PHP_EOL;
         $str .= "{" . PHP_EOL;
 
@@ -291,7 +298,7 @@ class ClassGenerator
         $methodBody = "return \$this->" . $prop->getName() . ";";
         $str .= $this->indent($methodBody) . PHP_EOL;
 
-        $str .= "}" . PHP_EOL;
+        $str .= "}" . PHP_EOL. PHP_EOL;
 
         return $str;
     }
@@ -401,6 +408,7 @@ class ClassGenerator
         $doc .= PHP_EOL;
         $doc .= "@return " . $type->getName();
 
+        $str = '';
         if ($doc) {
             $str .= $this->writeDocBlock($doc);
         }
