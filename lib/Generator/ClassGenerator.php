@@ -80,8 +80,18 @@ class ClassGenerator
                 $str .= 'use \\' . $ext->getFullName() . ";" . PHP_EOL;
             }
 
-            foreach ($type->getConstants() as $const) {
-                $str .= $this->handleConstant($const) . PHP_EOL . PHP_EOL;
+            if ($type->getConstants()) {
+                foreach ($type->getConstants() as $const) {
+                    $str .= $this->handleConstant($const) . PHP_EOL . PHP_EOL;
+                }
+
+                // For Hessian constants add property
+                $property = new PHPProperty();
+                $property->setName('name');
+                $propertyType = new PHPClass();
+                $propertyType->setName('string');
+                $property->setType($propertyType);
+                $type->addProperty($property);
             }
 
             foreach ($type->getProperties() as $prop) {
@@ -439,7 +449,7 @@ class ClassGenerator
         $doc = '';
 
         if ($prop->getDoc()) {
-            $doc .= $prop->getDoc() . PHP_EOL . PHP_EOL;
+            $doc .= $prop->getDoc() . PHP_EOL;
         }
 
         if ($prop->getType()) {
@@ -541,7 +551,7 @@ class ClassGenerator
         }
 
         foreach ($lines as $row) {
-            $content .= ' * ' . $row . PHP_EOL;
+            $content .= ' * ' . trim($row) . PHP_EOL;
         }
         $content .= ' */' . PHP_EOL;
         return $content;
