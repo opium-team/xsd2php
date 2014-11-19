@@ -236,13 +236,7 @@ class ClassGenerator
             $doc .= "@param $" . $prop->getName() . " mixed". PHP_EOL;
         }
 
-        if ($type && $type instanceof PHPClassOf) {
-            $doc .= "@return " . $this->getPhpType($type->getArg()->getType()) . "[]";
-        } elseif ($type) {
-            $doc .= "@return " . $this->getPhpType($type);
-        } else {
-            $doc .= "@return mixed";
-        }
+        $doc .= "@return \$this;";
 
         $str .= $this->writeDocBlock($doc);
 
@@ -268,7 +262,7 @@ class ClassGenerator
         $methodBody .= "return \$this;";
         $str .= $this->indent($methodBody) . PHP_EOL;
 
-        $str .= "}" . PHP_EOL;
+        $str .= "}";
 
         return $str;
     }
@@ -344,6 +338,9 @@ class ClassGenerator
             $doc .= " " . $this->getFirstLineComment($type->getArg()->getType()->getDoc());
         }
 
+        $doc .= PHP_EOL;
+        $doc .= "@return \$this;";
+
         // $str = "";
         if ($doc) {
             $str .= $this->writeDocBlock($doc);
@@ -359,7 +356,7 @@ class ClassGenerator
         $methodBody .= "return \$this;";
         $str .= $this->indent($methodBody) . PHP_EOL;
 
-        $str .= "}" . PHP_EOL;
+        $str .= "}" . PHP_EOL . PHP_EOL;
 
         return $str;
     }
@@ -379,7 +376,6 @@ class ClassGenerator
                 $str .= $this->handleValueMethods($prop, $class);
             }
             if ($type && $type instanceof PHPClassOf) {
-                $str .= PHP_EOL;
                 $str .= $this->handleAdder($prop, $class);
             }
 
@@ -555,6 +551,6 @@ class ClassGenerator
     {
         $tabs = str_repeat("    ", $times);
 
-        return $tabs . str_replace("\n", "\n" . $tabs, $str);
+        return str_replace("    " . PHP_EOL , PHP_EOL, $tabs . str_replace("\n", "\n" . $tabs, $str));
     }
 }
